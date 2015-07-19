@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/template/template_padrao.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+
+	</h:head>
+	<ui:define name="conteudo">
+		<h:form id="form">
+		<p:messages id="mensagens"  showSummary="true" />
+		<p:fieldset legend="Lista de Transacões">
+			
+			<p:dataTable id="tabelaTransacao" var="transacao" value="#{financeiroController.form.transacoes}" >
+			
+				<p:column id="TID" headerText="TID">
+					<h:outputText value="#{transacao.tid}" />
+				</p:column>
+				
+				<p:column id="Numero" headerText="NUMERO DO CARTÃO">
+					<h:outputText value="#{transacao.dadoPedido.numeroCartao}" />
+				</p:column>
+				
+				<p:column id="Descrição" headerText="DESCRIÇÃO">
+					<h:outputText value="#{transacao.dadoPedido.descricao}" />
+				</p:column>
+				
+				<p:column id="CodigoAutorizacao" headerText="CODIGO DE AUTORIZAÇÃO">
+					<h:outputText value="#{transacao.dadoPedido.codigoAutorizacao}" />
+				</p:column>
+				
+				<p:column id="nsu" headerText="NSU">
+					<h:outputText value="#{transacao.dadoPedido.nsu}" />
+				</p:column>
+				
+				<p:column id="Status" headerText="STATUS PAGAMENTO">
+					<h:outputText value="#{transacao.dadoPedido.status}" />
+				</p:column>
+
+				<p:column id="StatusCance" headerText="STATUS CANCELAMENTO" rendered="#{transacao.dadoPedido.codigoAutorizacao != 'null'}">
+					<h:outputText value="#{transacao.dadoPedido.statusCancelamento}" />
+				</p:column>
+
+				<p:column id="ValorCompra" headerText="VALOR DA COMPRA">
+					<h:outputText value="#{transacao.dadoPedido.valor}" />
+				</p:column>
+				
+				<p:column id="DataHora" headerText="DATA HORA">
+					<h:outputText value="#{transacao.dadoPedido.dataHora}" />
+				</p:column>
+				
+				<p:column id="FormaPagamento" headerText="FORMA DE PAGAMENTO">
+					<h:outputText value="#{transacao.formaPagamento.tipo}" />
+				</p:column>
+				
+				<p:column id="Pacela" headerText="PARCELA">
+					<h:outputText value="#{transacao.formaPagamento.parcela}" />
+				</p:column>
+				
+				<p:column headerText="AÇOES">
+					<p:commandButton  title="cancelar" 
+			          					ajax="false" 
+			             				icon="ui-icon-trash"
+			                            rendered="#{transacao.dadoPedido.status eq 'AUTORIZADO'}"
+			                            action="#{financeiroController.cancelarCompra()}"
+			                            update="form"
+			                            immediate="true"
+			                            value="cancelar compra">
+			       <f:setPropertyActionListener value="#{transacao.tid}" target="#{financeiroController.idTid}" />
+			        </p:commandButton>
+				</p:column>
+				
+			</p:dataTable>
+	</p:fieldset>
+</h:form>
+
+
+	</ui:define>
+</ui:composition>

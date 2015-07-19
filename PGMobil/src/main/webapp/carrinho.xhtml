@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/template/template_padrao.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+
+	</h:head>
+	<ui:define name="conteudo">
+		<h:form id="form">
+
+			<p:panel id="basic1" header="Basic" footer="Mais detalhes" tyle="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage value="/img/mac.png" width="150" height="150"/>
+					<h:outputText value="Computador Mac com IOS 8" />
+				</h:panelGrid>
+				<h:panelGrid columns="1" >
+					<h:outputText value="Preço: $10.0000,00" />
+					<p:commandButton value="COMPRAR" action="#{carrinhoController.comprar()}" >
+						<f:param name="valorCompra" value="10000" />
+						<f:param name="imagem" value="/img/mac.png" />
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+				<p:panel id="basic2" header="Basic" footer="Mais detalhes" tyle="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage value="/img/s6.jpg" width="150" height="150"/>
+					<h:outputText value="Ce3lular galaxy S6 Edge" />
+				</h:panelGrid>
+				<h:panelGrid columns="1" >
+					<h:outputText value="Preço: $4.0000,00" />
+					<p:commandButton value="COMPRAR" action="#{carrinhoController.comprar()}" >
+						<f:param name="valorCompra" value="4000" />
+						<f:param name="imagem" value="/img/s6.jpg" />
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+				<p:panel id="basic3" header="Basic" footer="Mais detalhes" tyle="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage value="/img/sony.jpg" width="150" height="150"/>
+					<h:outputText value="Note book sony vaio" />
+				</h:panelGrid>
+				<h:panelGrid columns="1" >
+					<h:outputText value="Preço: $6.0000,00" />
+					<p:commandButton value="COMPRAR" action="#{carrinhoController.comprar()}" >
+						<f:param name="valorCompra" value="6000" />
+						<f:param name="imagem" value="/img/sony.jpg" />
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+				
+				
+			
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

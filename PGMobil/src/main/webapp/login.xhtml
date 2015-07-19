@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/css/padrao.css" />
+<style>
+	.ui-widget,
+	.ui-widget .ui-widget {
+	font-size: 11px !important;
+	}
+</style>
+
+	<title> LOGIN </title>
+</h:head>
+
+<h:body>
+<div id="topo">
+	<h:form>
+	  <p:dialog header="Area restrita"  
+	                    modal="false"  
+	                    closable="false"     
+	                    width="400"   
+	                    draggable="false"  
+	                    resizable="false"  
+	                    visible="true"
+	                    position="center"
+	                    >           
+	             <h:panelGrid>   
+	                  <p:messages id="mensagens" showDetail="true" showSummary="true" />                      
+	                  <h:panelGrid columns="2" cellspacing="10" >         
+	                      <h:outputLabel value="Login: " style="FONT-WEIGHT: bold;"/>  
+	                      <h:inputText id="login" size="25" value="#{loginController.usuario.login}" />  
+	                      <h:outputLabel value="Senha: " style="FONT-WEIGHT: bold;"/>  
+	                      <h:inputSecret id="senha" size="25" value="#{loginController.usuario.senha}" /> 
+	                  </h:panelGrid> 
+	                  <br /> 
+	                      <h:panelGroup> 
+	                  	  <p:commandButton type="Submit" value="Entrar" icon="ui-icon-locked" style="margin-left:60%" action="#{loginController.entrar()}" ajax="false" update="mensagens"/>
+	                  	  </h:panelGroup>       
+	                  <br />      
+	     		</h:panelGrid>
+	   </p:dialog>
+	   
+	   
+	</h:form>
+	<div id="fundoLogin" >
+		
+	</div>
+	</div>
+</h:body>
+</html>
