@@ -28,7 +28,7 @@ public class ProcessamentoController implements IProcessamentoController{
 	 * @return TransacaoDTO
 	 * @throws ServiceException 
 	 */	
-	public static TransacaoDTO processarPedido(TransacaoDTO transacao, ComunicadorFactory comunicadorFactory,String acao) throws ServiceException{
+	public TransacaoDTO processarPedido(TransacaoDTO transacao, ComunicadorFactory comunicadorFactory,String acao) throws ServiceException{
 
 		TransacaoDTO transacaoDto = null;
 		String bandeira = Util.buscarBandeira(transacao.getDadoPedido().getNumeroCartao());
@@ -60,13 +60,13 @@ public class ProcessamentoController implements IProcessamentoController{
 	/**
 	 * Meotodo que valida os dados informado.
 	 */
-	private static TransacaoDTO validarDadosCartao(TransacaoDTO transacao) {
+	private TransacaoDTO validarDadosCartao(TransacaoDTO transacao) throws ServiceException{	
 		
-		try {
+	try {
 			
-			if(transacao.getDadoPedido().getNumeroCartao() == CartaoMock.NUMERO_CARTAO_BLOQUEADO){
+			if(transacao.getDadoPedido().getNumeroCartao().equals(CartaoMock.NUMERO_CARTAO_BLOQUEADO)){
 				
-				transacao.getDadoPedido().setStatus(EnumStatusCartao.NEGADO.getCodigo());
+				transacao.getDadoPedido().setStatus(EnumStatusCartao.NAO_AUTORIZADO.getCodigo());
 				
 			} else if (transacao.getDadoPedido().getValor()> EnumCartao.LIMITE_CARTAO_BRANDX.getCodigo()){
 				
@@ -75,16 +75,19 @@ public class ProcessamentoController implements IProcessamentoController{
 			}else{
 				
 				transacao.getDadoPedido().setStatus(EnumStatusCartao.AUTORIZADO.getCodigo());
+				transacao.getDadoPedido().setCodigoAutorizacao(Util.geraCodigoAutorizacao());
+				transacao.getDadoPedido().setNsu(Util.geraCodigoNSU());
 			}
 		} catch (Exception e) {
 			
-			// TODO: handle exception
+			throw new ServiceException(e);
 		}
 		
 		
 		return transacao;
 	}
 
+	
 	@Override
 	public TransacaoDTO cancelarPedido(TransacaoDTO transacao) throws ServiceException {
 
@@ -117,11 +120,13 @@ public class ProcessamentoController implements IProcessamentoController{
 	}
 
 	@Override
-	public TransacaoDTO processarPedido(TransacaoDTO transacao) {
+	public TransacaoDTO processarPedido(TransacaoDTO transacao) throws ServiceException {
 		
 		transacao = validarDadosCartao(transacao);		
 		
 		return transacao;
 	}
+	
+	
 
 }

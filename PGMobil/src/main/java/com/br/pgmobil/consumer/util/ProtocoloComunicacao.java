@@ -27,6 +27,7 @@ public class ProtocoloComunicacao {
 
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
+			
 			connection.setConnectTimeout(15000);
 			connection.connect();
 
