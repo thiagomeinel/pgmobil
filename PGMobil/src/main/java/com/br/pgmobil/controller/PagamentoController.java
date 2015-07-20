@@ -65,14 +65,13 @@ public class PagamentoController implements Serializable {
 	 * Metodo reponsavel por enviar
 	 * um requisição e solicitar o a abertura de transacao
 	 */
-	@SuppressWarnings("deprecation")
+
 	public void finalizarCompra(){
-		
+		TransacaoDTO transacao = null;
+
 		try {
-			TransacaoDTO transacao = new TransacaoDTO(null,
-					new PedidoDTO(form.getValor(),new Date().toLocaleString(),"loja de informatica",null,form.getNumeroCartao(),null,null,null),
-					new PagamentoDTO(form.getTipo(), form.getQuantidade(), null, null));
 			
+			transacao = montarDTO();
 			PagamentoConsumer pagamentoConsumer = new PagamentoConsumer();
 			
 			TransacaoDTO transacaoDto = pagamentoConsumer.efetuarPagamento(transacao);
@@ -81,23 +80,23 @@ public class PagamentoController implements Serializable {
 			switch (EnumStatusCartao.valueOf(transacaoDto.getDadoPedido().getStatus())) {
 			
 			case AUTORIZADO:
-					
+				context = FacesContext.getCurrentInstance();	
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Seu pagamento foi autorizado",""));	
 				
 				break;
 			case SALDO_INSUFICIENTE:
-				
+				context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"O saldo do seu cartao é inferior ao valor da compra.",""));	
 				
 				break;
 			case NEGADO:
-				
+				context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Sua solicitação foi negado por nosso servidor.",""));	
 				
 				break;
 
 			default:
-				
+				context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"ERRO INTERNO NO SISTEMA",""));	
 				
 				break;
@@ -109,6 +108,17 @@ public class PagamentoController implements Serializable {
 		} catch (Exception ex) {
 			log.error(ex);
 		}
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	public TransacaoDTO montarDTO(){
+		
+		TransacaoDTO transacao = new TransacaoDTO(null,
+				new PedidoDTO(form.getValor(),new Date().toLocaleString(),"loja de informatica",null,form.getNumeroCartao(),null,null,null),
+				new PagamentoDTO(null, form.getQuantidade(), null, null));
+		
+		return transacao;
 	}
 	
 	

@@ -35,7 +35,7 @@ public class UtilService {
 		TransacaoDTO transacaoDto = null;
 
 		try {
-
+			
 			String bandeira = Util.buscarBandeira(transacao.getDadoPedido().getNumeroCartao());
 
 			switch (EnumBandeira.valueOf(bandeira)) {
@@ -52,8 +52,8 @@ public class UtilService {
 			}
 
 			IEmissor emissor = comunicadorFactory.criarEmissor();
-
 			transacaoDto = emissor.enviar(transacao,acao);
+			
 			IReceptor receptor = comunicadorFactory.criarReceptor();
 			receptor.recebe(transacaoDto);
 
@@ -77,5 +77,17 @@ public class UtilService {
 		}
 		
 		return transacoes;
+	}
+	
+	
+	public static TransacaoDTO listarPorId(String id) throws ServiceException{
+		TransacaoDTO transacao = null;
+		try {
+			
+			transacao = DataBase.getById(id);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+		return transacao;
 	}
 }

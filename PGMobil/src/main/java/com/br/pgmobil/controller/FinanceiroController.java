@@ -48,8 +48,7 @@ public class FinanceiroController implements Serializable{
 			transacao = DataBase.getById(idTid);
 			
 			IFinanceiroConsumer financeiroConsumer = new FinanceiroConsumer();
-			TransacaoDTO transacaoDto = financeiroConsumer.cancelar(transacao);
-			transacao = validarCancelamento(transacaoDto);
+			transacao = financeiroConsumer.cancelar(transacao);
 
 			switch (EnumStatusCartao.valueOf(transacao.getDadoPedido().getStatusCancelamento())) {
 
@@ -73,29 +72,6 @@ public class FinanceiroController implements Serializable{
 			log.error(ex);
 		}
 	}
-
-	/**
-	 * Metodo responsavel por validar o cancelamento da compra.
-	 * caso a compra efetuada esteja no pedrido de 24h a mesma podera ser cancelada caso contratrio não.
-	 * @param transacao
-	 * @return TransacaoDTO
-	 */
-	private TransacaoDTO validarCancelamento(TransacaoDTO transacao){
-		TransacaoDTO retornoTransacao = null;
-		try {
-			
-			IFinanceiroConsumer financeiroConsumer = new FinanceiroConsumer();
-			retornoTransacao = financeiroConsumer.validarCancelamento(transacao);
-			
-		} catch (ServiceException e) {
-			log.error(e);
-		} catch (Exception ex) {
-			log.error(ex);
-		}
-			
-		return retornoTransacao;
-	}
-
 
 	/**
 	 * Metodo que retorna todas as transaçoes efetuadas.

@@ -26,10 +26,6 @@
 					<h:outputText value="#{transacao.dadoPedido.numeroCartao}" />
 				</p:column>
 				
-				<p:column id="Descrição" headerText="DESCRIÇÃO">
-					<h:outputText value="#{transacao.dadoPedido.descricao}" />
-				</p:column>
-				
 				<p:column id="CodigoAutorizacao" headerText="CODIGO DE AUTORIZAÇÃO">
 					<h:outputText value="#{transacao.dadoPedido.codigoAutorizacao}" />
 				</p:column>
@@ -42,12 +38,15 @@
 					<h:outputText value="#{transacao.dadoPedido.status}" />
 				</p:column>
 
-				<p:column id="StatusCance" headerText="STATUS CANCELAMENTO" rendered="#{transacao.dadoPedido.codigoAutorizacao != 'null'}">
+				<p:column id="StatusCance" headerText="STATUS CANCELAMENTO">
 					<h:outputText value="#{transacao.dadoPedido.statusCancelamento}" />
 				</p:column>
 
 				<p:column id="ValorCompra" headerText="VALOR DA COMPRA">
-					<h:outputText value="#{transacao.dadoPedido.valor}" />
+				
+					<h:outputText value="#{transacao.dadoPedido.valor}" >
+						<f:convertNumber currencySymbol="$" type="currency"/>
+					</h:outputText>
 				</p:column>
 				
 				<p:column id="DataHora" headerText="DATA HORA">
@@ -59,14 +58,14 @@
 				</p:column>
 				
 				<p:column id="Pacela" headerText="PARCELA">
-					<h:outputText value="#{transacao.formaPagamento.parcela}" />
+					<h:outputText value="#{transacao.formaPagamento.quantidade}" />
 				</p:column>
 				
 				<p:column headerText="AÇOES">
 					<p:commandButton  title="cancelar" 
-			          					ajax="false" 
+			          					ajax="true" 
 			             				icon="ui-icon-trash"
-			                            rendered="#{transacao.dadoPedido.status eq 'AUTORIZADO'}"
+			                            rendered="#{transacao.dadoPedido.status eq 'AUTORIZADO' &amp;&amp; transacao.dadoPedido.statusCancelamento eq null}"
 			                            action="#{financeiroController.cancelarCompra()}"
 			                            update="form"
 			                            immediate="true"

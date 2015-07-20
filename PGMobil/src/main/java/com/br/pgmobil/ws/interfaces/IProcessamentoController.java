@@ -7,7 +7,7 @@ import com.br.pgmobil.dto.TransacaoDTO;
 
 public interface IProcessamentoController {
 
-	TransacaoDTO processarPedido(TransacaoDTO transacao);
+	TransacaoDTO processarPedido(TransacaoDTO transacao) throws ServiceException;
 	TransacaoDTO cancelarPedido(TransacaoDTO transacao) throws ServiceException;
 	List<TransacaoDTO> ConsultarPedido();
 }

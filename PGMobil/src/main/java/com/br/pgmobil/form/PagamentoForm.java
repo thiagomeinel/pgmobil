@@ -14,7 +14,7 @@ public class PagamentoForm implements Serializable{
 	private Long valor;
 	private Date dataHora;
 	private String tipo;
-	private String quantidade;
+	private int quantidade;
 	private String caminhoImg;
 	private List<TransacaoDTO> transacoes;
 	
@@ -55,10 +55,10 @@ public class PagamentoForm implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getQuantidade() {
+	public int getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(String quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 	public String getCaminhoImg() {

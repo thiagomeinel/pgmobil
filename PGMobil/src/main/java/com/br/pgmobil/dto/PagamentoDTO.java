@@ -8,7 +8,7 @@ public class PagamentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String tipo;
-	private String quantidade;
+	private int quantidade;
 	private String modalidade;
 	private String parcela;
 	
@@ -16,7 +16,7 @@ public class PagamentoDTO implements Serializable{
 		
 	}
 	
-	public PagamentoDTO(String tipo, String quantidade, String modalidade, String parcela) {
+	public PagamentoDTO(String tipo, int quantidade, String modalidade, String parcela) {
 		super();
 		this.tipo = tipo;
 		this.quantidade = quantidade;
@@ -29,10 +29,10 @@ public class PagamentoDTO implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getQuantidade() {
+	public int getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(String quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 

@@ -11,17 +11,22 @@ import com.br.pgmobil.ws.servico.ProcessamentoController;
  *
  *VISA
  */
-public class EmissorBrandX implements IEmissor{
+public class EmissorBrandX extends TipoPagamento implements IEmissor{
 
 	public TransacaoDTO enviar(TransacaoDTO transacao, String acao) throws ServiceException {
 
 	switch (EnumStatus.valueOf(acao)) {
 	
 		case PAGAR:
+			
+			transacao.getFormaPagamento().setTipo(processarFormaPagamento(transacao.getFormaPagamento().getQuantidade(), transacao));
 			transacao = new ProcessamentoController().processarPedido(transacao);
+			
 			break;
 		case CANCELAR:
+			
 			transacao = new ProcessamentoController().cancelarPedido(transacao);
+			
 			break;
 
 		default:
